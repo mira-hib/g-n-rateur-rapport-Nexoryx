@@ -4,12 +4,14 @@ Interface web Streamlit pour le générateur de rapports d'audit.
 
 Permet de sélectionner un audit depuis la base de données, modifier les informations
 et générer des rapports PDF/DOCX enrichis par IA via LangGraph.
+
 """
 
 import streamlit as st
 import sys
 from datetime import date
 from pathlib import Path
+
 
 if sys.platform == 'win32':
     import codecs
