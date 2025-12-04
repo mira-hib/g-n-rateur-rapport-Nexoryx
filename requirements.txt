@@ -1,0 +1,24 @@
+# IA et LangGraph - let pip resolve compatible versions
+langgraph>=0.2.0
+langchain>=0.3.0
+langchain-openai>=0.2.0
+langchain-anthropic>=0.2.0
+langchain-google-genai>=2.0.5
+langchain-huggingface>=0.1.2
+
+# Validation et typage
+pydantic>=2.9.0
+pydantic-settings>=2.6.0
+
+# Génération de documents
+reportlab>=4.2.0
+python-docx>=1.1.0
+Jinja2>=3.1.4
+Pillow>=10.4.0
+
+# Interface utilisateur
+streamlit>=1.39.0
+
+# Utilitaires
+python-dotenv>=1.0.1
+typing-extensions>=4.12.0
