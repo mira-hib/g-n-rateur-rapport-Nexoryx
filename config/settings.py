@@ -33,12 +33,21 @@ class Settings(BaseSettings):
 
     ai_provider: AIProvider = ""
     """Provider IA à utiliser: 'openai', 'gemini', 'claude', ou 'zephyr'"""
+    
+    api_key_dict : dict[str, Optional[str]] = {
+    }
+    
+    @staticmethod
+    def registry_api_keys(api_key_dict : dict[str, Optional[str]], name : str, key: Optional[str]) -> None:
+        """Enregistre les clés API dans un dictionnaire pour accès facile."""
+        api_key_dict[name] = key
 
     # Clés API pour chaque provider
     openai_api_key: Optional[str] = None
     gemini_api_key: Optional[str] = None  # Google API Key
     anthropic_api_key: Optional[str] = None  # Claude
     huggingface_api_key: Optional[str] = None  # Pour Zephyr
+    
 
     # ==========================================
     # CONFIGURATION DES MODÈLES PAR PROVIDER
@@ -125,6 +134,12 @@ class Settings(BaseSettings):
         os.makedirs(self.reports_output_dir, exist_ok=True)
         os.makedirs(self.templates_dir, exist_ok=True)
         os.makedirs(self.assets_dir, exist_ok=True)
+        self.registry_api_keys(self.api_key_dict, "openai", self.openai_api_key)
+        self.registry_api_keys(self.api_key_dict,"gemini", self.gemini_api_key)
+        self.registry_api_keys(self.api_key_dict,"claude", self.anthropic_api_key)
+        self.registry_api_keys(self.api_key_dict,"zephyr", self.huggingface_api_key)
+
+
 
     def get_api_key(self) -> Optional[str]:
         """
@@ -133,14 +148,8 @@ class Settings(BaseSettings):
         Returns:
             Clé API ou None si non configurée
         """
-        if self.ai_provider == "openai":
-            return self.openai_api_key
-        elif self.ai_provider == "gemini":
-            return self.gemini_api_key
-        elif self.ai_provider == "claude":
-            return self.anthropic_api_key
-        elif self.ai_provider == "zephyr":
-            return self.huggingface_api_key
+        if self.api_key_dict.get(self.ai_provider) is not None:
+            return self.api_key_dict[self.ai_provider]
         return None
 
     def get_model_name(self) -> str:
@@ -180,3 +189,4 @@ class Settings(BaseSettings):
 
 # Instance globale
 settings = Settings()
+print(settings.gemini_api_key)
